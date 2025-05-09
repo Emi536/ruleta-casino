@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>🎁 Ruleta de Bonos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+
+    #puntero {
+      width: 0;
+      height: 0;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      border-bottom: 40px solid red;
+      margin: 10px auto;
+    }
+
+    #ruleta {
+      margin: 20px auto;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      border: 10px solid #333;
+      position: relative;
+      overflow: hidden;
+      transform: rotate(0deg);
+      transition: transform 4s ease-out;
+    }
+
+    .segmento {
+      width: 50%;
+      height: 50%;
+      position: absolute;
+      transform-origin: 100% 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 12px;
+      clip-path: polygon(100% 100%, 0 100%, 100% 0);
+      color: white;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 16px;
+      width: 280px;
+      margin-top: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 20px 5px;
+    }
+
+    #resultado {
+      font-size: 18px;
+      margin-top: 20px;
+    }
+
+    table {
+      margin: 30px auto;
+      border-collapse: collapse;
+      width: 80%;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+
+    th {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎁 Ruleta de Bonos</h1>
+  <input type="text" id="nombreUsuario" placeholder="Registre su nombre de usuario del casino" />
+  <div id="puntero"></div>
+  <div id="ruleta"></div>
+  <button onclick="girar()">Girar</button>
+  <button onclick="mostrarGanadores()">Ver ganadores de hoy</button>
+  <div id="resultado"></div>
+
+  <div id="tablaGanadores"></div>
+
+  <script>
+    const premios = ["10% OFF", "Envío gratis", "Producto extra", "50% OFF", "Nada 😢", "2x1"];
+    const ruleta = document.getElementById("ruleta");
+    let anguloActual = 0;
+
+    function crearSegmentos() {
+      const total = premios.length;
+      const angulo = 360 / total;
+
+      premios.forEach((premio, i) => {
+        const segmento = document.createElement("div");
+        segmento.classList.add("segmento");
+        segmento.style.transform = `rotate(${i * angulo}deg)`;
+        segmento.style.background = i % 2 === 0 ? "#3498db" : "#e74c3c";
+        segmento.innerHTML = premio;
+        ruleta.appendChild(segmento);
+      });
+    }
+
+    function girar() {
+      const nombre = document.getElementById("nombreUsuario").value.trim();
+      if (!nombre) {
+        alert("Por favor, registre su nombre de usuario del casino.");
+        return;
+      }
+
+      const giros = 5;
+      const premioIndex = Math.floor(Math.random() * premios.length);
+      const anguloPorPremio = 360 / premios.length;
+      const anguloFinal = 360 * giros + (premios.length - premioIndex) * anguloPorPremio - anguloPorPremio / 2;
+
+      anguloActual += anguloFinal;
+      ruleta.style.transform = `rotate(${anguloActual}deg)`;
+
+      setTimeout(() => {
+        const premio = premios[premioIndex];
+        document.getElementById("resultado").innerText = `🎉 Premio: ${premio} 🎉`;
+        guardarResultado(nombre, premio);
+      }, 4000);
+    }
+
+    function guardarResultado(nombre, premio) {
+      const hoy = new Date().toISOString().split('T')[0];
+      const datos = JSON.parse(localStorage.getItem("resultadosRuleta") || "[]");
+      datos.push({ nombre, premio, fecha: hoy });
+      localStorage.setItem("resultadosRuleta", JSON.stringify(datos));
+    }
+
+    function mostrarGanadores() {
+      const hoy = new Date().toISOString().split('T')[0];
+      const datos = JSON.parse(localStorage.getItem("resultadosRuleta") || "[]");
+      const hoyEsDomingo = new Date().getDay() === 0;
+
+      if (!hoyEsDomingo) {
+        alert("Hoy no es domingo. Solo se muestran ganadores en domingo.");
+        return;
+      }
+
+      const ganadoresHoy = datos.filter(d => d.fecha === hoy);
+
+      if (ganadoresHoy.length === 0) {
+        document.getElementById("tablaGanadores").innerHTML = "<p>No hay ganadores registrados hoy.</p>";
+        return;
+      }
+
+      let tabla = "<table><tr><th>Nombre</th><th>Premio</th></tr>";
+      ganadoresHoy.forEach(d => {
+        tabla += `<tr><td>${d.nombre}</td><td>${d.premio}</td></tr>`;
+      });
+      tabla += "</table>";
+      document.getElementById("tablaGanadores").innerHTML = tabla;
+    }
+
+    crearSegmentos();
+  </script>
+</body>
+</html>
