@@ -86,6 +86,62 @@
       color: var(--primary-color);
     }
 
+    /* Nuevos estilos para la sección de ruleta */
+    .roulette-section {
+      margin: 4rem 0;
+      text-align: center;
+    }
+    
+    .roulette-title {
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+    }
+    
+    .roulette-container {
+      display: flex;
+      justify-content: center;
+      margin: 2rem 0;
+      position: relative;
+    }
+    
+    .roulette-wheel {
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background-image: url('https://i.imgur.com/J7l5wQx.png');
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      transition: transform 3s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+      position: relative;
+      z-index: 1;
+    }
+    
+    .roulette-wheel:hover {
+      transform: rotate(360deg);
+    }
+    
+    .roulette-arrow {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      border-top: 40px solid var(--accent-color);
+      z-index: 2;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    }
+    
+    .roulette-description {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
     @media (min-width: 768px) {
       .hero h1 {
         font-size: 3rem;
@@ -93,6 +149,11 @@
 
       .features {
         grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .roulette-wheel {
+        width: 400px;
+        height: 400px;
       }
     }
 
@@ -122,6 +183,16 @@
       <h1>Optimiza tus estrategias VIP</h1>
       <p>PlayerMetrics centraliza y visualiza la actividad de tus jugadores, facilitando la toma de decisiones para crecer tu comunidad VIP de manera efectiva.</p>
       <a href="#features" class="cta">Descubre cómo</a>
+    </section>
+
+    <!-- Sección de la ruleta añadida -->
+    <section class="roulette-section">
+      <h2 class="roulette-title">Ruleta de Premios VIP</h2>
+      <div class="roulette-container">
+        <div class="roulette-wheel"></div>
+        <div class="roulette-arrow"></div>
+      </div>
+      <p class="roulette-description">Nuestra exclusiva ruleta VIP ofrece premios especiales a los jugadores más activos. Gira la ruleta para descubrir increíbles bonificaciones y recompensas personalizadas.</p>
     </section>
 
     <section id="features" class="features">
