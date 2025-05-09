@@ -1,177 +1,159 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>🎁 Ruleta de Bonos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PlayerMetrics - Casino VIP</title>
   <style>
+    :root {
+      --primary-color: #6f42c1;
+      --secondary-color: #f8f9fa;
+      --text-color: #212529;
+      --bg-color: #ffffff;
+      --accent-color: #ffc107;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      text-align: center;
-      padding: 20px;
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
     }
 
-    h1 {
-      font-size: 2em;
-      margin-bottom: 10px;
-    }
-
-    #puntero {
-      width: 0;
-      height: 0;
-      border-left: 20px solid transparent;
-      border-right: 20px solid transparent;
-      border-bottom: 40px solid red;
-      margin: 10px auto;
-    }
-
-    #ruleta {
-      margin: 20px auto;
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      border: 10px solid #333;
-      position: relative;
-      overflow: hidden;
-      transform: rotate(0deg);
-      transition: transform 4s ease-out;
-    }
-
-    .segmento {
-      width: 50%;
-      height: 50%;
-      position: absolute;
-      transform-origin: 100% 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 12px;
-      clip-path: polygon(100% 100%, 0 100%, 100% 0);
+    header {
+      background-color: var(--primary-color);
       color: white;
+      padding: 1rem;
+      text-align: center;
     }
 
-    input {
-      padding: 10px;
-      font-size: 16px;
-      width: 280px;
-      margin-top: 10px;
+    .container {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: auto;
     }
 
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      margin: 20px 5px;
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      text-align: center;
     }
 
-    #resultado {
-      font-size: 18px;
-      margin-top: 20px;
+    .hero h1 {
+      font-size: 2.5rem;
+      margin: 0;
     }
 
-    table {
-      margin: 30px auto;
-      border-collapse: collapse;
-      width: 80%;
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 700px;
     }
 
-    th, td {
-      padding: 10px;
-      border: 1px solid #ccc;
+    .cta {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      background-color: var(--accent-color);
+      color: #000;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background-color 0.3s;
     }
 
-    th {
-      background-color: #f0f0f0;
+    .cta:hover {
+      background-color: #e0a800;
+    }
+
+    .features {
+      display: grid;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .feature {
+      background-color: var(--secondary-color);
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .feature h3 {
+      margin-top: 0;
+      color: var(--primary-color);
+    }
+
+    @media (min-width: 768px) {
+      .hero h1 {
+        font-size: 3rem;
+      }
+
+      .features {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .features {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    footer {
+      margin-top: 4rem;
+      padding: 2rem;
+      background-color: var(--primary-color);
+      color: white;
+      text-align: center;
     }
   </style>
 </head>
 <body>
+  <header>
+    <h1>PlayerMetrics</h1>
+    <p>La herramienta definitiva para analizar y optimizar tu comunidad VIP</p>
+  </header>
 
-  <h1>🎁 Ruleta de Bonos</h1>
-  <input type="text" id="nombreUsuario" placeholder="Registre su nombre de usuario del casino" />
-  <div id="puntero"></div>
-  <div id="ruleta"></div>
-  <button onclick="girar()">Girar</button>
-  <button onclick="mostrarGanadores()">Ver ganadores de hoy</button>
-  <div id="resultado"></div>
+  <div class="container">
+    <section class="hero">
+      <h1>Optimiza tus estrategias VIP</h1>
+      <p>PlayerMetrics centraliza y visualiza la actividad de tus jugadores, facilitando la toma de decisiones para crecer tu comunidad VIP de manera efectiva.</p>
+      <a href="#features" class="cta">Descubre cómo</a>
+    </section>
 
-  <div id="tablaGanadores"></div>
+    <section id="features" class="features">
+      <div class="feature">
+        <h3>Análisis de Actividad</h3>
+        <p>Monitorea las cargas, franjas horarias y comportamiento de tus jugadores con filtros avanzados.</p>
+      </div>
+      <div class="feature">
+        <h3>Detección de VIPs</h3>
+        <p>Detecta automáticamente jugadores exclusivos o recurrentes según criterios de carga y frecuencia.</p>
+      </div>
+      <div class="feature">
+        <h3>Historial y Segmentación</h3>
+        <p>Accede al historial completo por jugador, incluyendo contacto, bonos ofrecidos y conversiones.</p>
+      </div>
+      <div class="feature">
+        <h3>Integración con Google Sheets</h3>
+        <p>Trabaja en tiempo real con tus hojas de cálculo para mantener registros actualizados sin esfuerzo.</p>
+      </div>
+      <div class="feature">
+        <h3>Visualizaciones Estratégicas</h3>
+        <p>Explora dashboards interactivos con métricas clave y rankings actualizados al instante.</p>
+      </div>
+      <div class="feature">
+        <h3>Automatización Total</h3>
+        <p>Automatiza tareas repetitivas como descargas, actualizaciones y generación de reportes.</p>
+      </div>
+    </section>
+  </div>
 
-  <script>
-    const premios = ["10% OFF", "Envío gratis", "Producto extra", "50% OFF", "Nada 😢", "2x1"];
-    const ruleta = document.getElementById("ruleta");
-    let anguloActual = 0;
-
-    function crearSegmentos() {
-      const total = premios.length;
-      const angulo = 360 / total;
-
-      premios.forEach((premio, i) => {
-        const segmento = document.createElement("div");
-        segmento.classList.add("segmento");
-        segmento.style.transform = `rotate(${i * angulo}deg)`;
-        segmento.style.background = i % 2 === 0 ? "#3498db" : "#e74c3c";
-        segmento.innerHTML = premio;
-        ruleta.appendChild(segmento);
-      });
-    }
-
-    function girar() {
-      const nombre = document.getElementById("nombreUsuario").value.trim();
-      if (!nombre) {
-        alert("Por favor, registre su nombre de usuario del casino.");
-        return;
-      }
-
-      const giros = 5;
-      const premioIndex = Math.floor(Math.random() * premios.length);
-      const anguloPorPremio = 360 / premios.length;
-      const anguloFinal = 360 * giros + (premios.length - premioIndex) * anguloPorPremio - anguloPorPremio / 2;
-
-      anguloActual += anguloFinal;
-      ruleta.style.transform = `rotate(${anguloActual}deg)`;
-
-      setTimeout(() => {
-        const premio = premios[premioIndex];
-        document.getElementById("resultado").innerText = `🎉 Premio: ${premio} 🎉`;
-        guardarResultado(nombre, premio);
-      }, 4000);
-    }
-
-    function guardarResultado(nombre, premio) {
-      const hoy = new Date().toISOString().split('T')[0];
-      const datos = JSON.parse(localStorage.getItem("resultadosRuleta") || "[]");
-      datos.push({ nombre, premio, fecha: hoy });
-      localStorage.setItem("resultadosRuleta", JSON.stringify(datos));
-    }
-
-    function mostrarGanadores() {
-      const hoy = new Date().toISOString().split('T')[0];
-      const datos = JSON.parse(localStorage.getItem("resultadosRuleta") || "[]");
-      const hoyEsDomingo = new Date().getDay() === 0;
-
-      if (!hoyEsDomingo) {
-        alert("Hoy no es domingo. Solo se muestran ganadores en domingo.");
-        return;
-      }
-
-      const ganadoresHoy = datos.filter(d => d.fecha === hoy);
-
-      if (ganadoresHoy.length === 0) {
-        document.getElementById("tablaGanadores").innerHTML = "<p>No hay ganadores registrados hoy.</p>";
-        return;
-      }
-
-      let tabla = "<table><tr><th>Nombre</th><th>Premio</th></tr>";
-      ganadoresHoy.forEach(d => {
-        tabla += `<tr><td>${d.nombre}</td><td>${d.premio}</td></tr>`;
-      });
-      tabla += "</table>";
-      document.getElementById("tablaGanadores").innerHTML = tabla;
-    }
-
-    crearSegmentos();
-  </script>
+  <footer>
+    <p>&copy; 2025 PlayerMetrics. Todos los derechos reservados.</p>
+  </footer>
 </body>
 </html>
