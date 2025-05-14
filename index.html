@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ruleta de Premios</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Winwheel.js/2.7.0/Winwheel.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>🎁 Ruleta de la Suerte</h1>
+
+    <!-- Área de login (frontend, espera validación del backend) -->
+    <div id="loginArea">
+      <input type="text" id="username" placeholder="Usuario">
+      <input type="password" id="password" placeholder="Contraseña">
+      <button onclick="login()">Iniciar sesión</button>
+      <p id="loginError" class="oculto">Credenciales incorrectas</p>
+    </div>
+
+    <!-- Área de ruleta protegida por login -->
+    <div id="ruletaArea" class="oculto">
+      <div class="canvas-container">
+        <canvas id="ruleta" width="300" height="300"></canvas>
+      </div>
+      <button id="girar">Girar</button>
+      <div id="premio" class="premio oculto">
+        <img id="imgPremio" src="" alt="Premio">
+        <p id="textoPremio"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Login simulado (debe conectarse a backend real)
+    function login() {
+      const user = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
+
+      // Lógica temporal (reemplazar por validación con backend real via fetch)
+      if (user === "admin" && pass === "1234") {
+        document.getElementById("loginArea").classList.add("oculto");
+        document.getElementById("ruletaArea").classList.remove("oculto");
+      } else {
+        document.getElementById("loginError").classList.remove("oculto");
+      }
+    }
+
+    // Inicializar ruleta
+    const ruleta = new Winwheel({
+      numSegments: 6,
+      outerRadius: 140,
+      segments: [
+        { fillStyle: '#e74c3c', text: 'Premio 1' },
+        { fillStyle: '#f1c40f', text: 'Premio 2' },
+        { fillStyle: '#2ecc71', text: 'Premio 3' },
+        { fillStyle: '#3498db', text: 'Premio 4' },
+        { fillStyle: '#9b59b6', text: 'Premio 5' },
+        { fillStyle: '#e67e22', text: 'Premio 6' }
+      ],
+      animation: {
+        type: 'spinToStop',
+        duration: 5,
+        spins: 8,
+        callbackFinished: mostrarPremio
+      }
+    });
+
+    // Verificar cookie local (localStorage) para limitar a una vez por día
+    const boton = document.getElementById('girar');
+    const ultimaJugada = localStorage.getItem('ultimaJugada');
+    const ahora = Date.now();
+
+    if (ultimaJugada && ahora - parseInt(ultimaJugada) < 24 * 60 * 60 * 1000) {
+      boton.disabled = true;
+      boton.textContent = "Ya jugaste hoy";
+    }
+
+    boton.addEventListener('click', () => {
+      ruleta.startAnimation();
+      localStorage.setItem('ultimaJugada', Date.now().toString());
+    });
+
+    // Mostrar premio + animaciones
+    function mostrarPremio(indicado) {
+      const premio = indicado.text;
+      document.getElementById('textoPremio').textContent = `¡Ganaste ${premio}!`;
+      document.getElementById('imgPremio').src = `assets/${premio.toLowerCase().replace(/\s+/g, '')}.png`;
+      document.getElementById('premio').classList.remove('oculto');
+      lanzarConfetti();
+    }
+
+    function lanzarConfetti() {
+      confetti({
+        particleCount: 150,
+        spread: 100,
+        origin: { y: 0.6 }
+      });
+    }
+  </script>
+</body>
+</html>

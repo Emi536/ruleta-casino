@@ -1,0 +1,100 @@
+/* style.css */
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom, #f5f7fa, #c3cfe2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  text-align: center;
+  padding: 1rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 400px;
+}
+
+h1 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.canvas-container {
+  width: 100%;
+  margin: 1rem 0;
+}
+
+canvas {
+  width: 100%;
+  height: auto;
+}
+
+button {
+  padding: 0.75rem;
+  font-size: 1rem;
+  width: 100%;
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 1rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #219150;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.premio {
+  margin-top: 1.5rem;
+}
+
+.premio img {
+  width: 120px;
+  height: auto;
+  margin-bottom: 0.5rem;
+}
+
+.premio p {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.oculto {
+  display: none;
+}
+
+#loginError {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.3rem;
+  }
+  button, input {
+    font-size: 0.95rem;
+  }
+  .premio img {
+    width: 90px;
+  }
+}
