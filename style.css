@@ -1,148 +1,225 @@
+/* 🎨 style.css */
 body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: "Montserrat Roman", sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: "Montserrat", sans-serif;
+  background: #005f4e;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
+/* ==================== PANTALLA DE CARGA ==================== */
 .loading-screen {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  background: url("assets/fondo.png") no-repeat center center/cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
 }
 
 .background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
 }
 
 .content {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100vh;
-    padding: 20px;
-    box-sizing: border-box;
-    justify-content: center;
-    margin-top: 100px; /* Aumentado para bajar todo el contenido */
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  justify-content: center;
+  margin-top: 100px;
 }
 
 .progress-container {
-    width: 90%;
-    max-width: 400px;
-    height: 10px;
-    position: relative;
-    margin: 0 auto;
-    margin-top: 100px; /* Aumentado para bajar la barra de carga */
+  width: 90%;
+  max-width: 400px;
+  height: 10px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 5px;
+  margin-top: 40px;
+  position: relative;
 }
 
 .progress-bar {
-    width: 100%;
-    height: 100%;
-    background: url("assets/barra.png") no-repeat;
-    background-size: cover;
-    border-radius: 10px;
-    position: relative;
-    overflow: visible;
+  width: 100%;
+  height: 100%;
+  background: url("assets/barra.png") no-repeat;
+  background-size: cover;
+  border-radius: 10px;
+  position: relative;
+  overflow: visible;
 }
 
 .progress-fill {
-    height: 100%;
-    width: 0%;
-    position: relative;
-    transition: width 0.4s ease;
-    z-index: 0;
+  height: 100%;
+  width: 0%;
+  background: #00ffd0;
+  border-radius: 5px;
+  transition: width 0.4s ease;
+  position: relative;
+  z-index: 0;
 }
 
 .progress-bubble {
-    position: absolute;
-    top: 50%;
-    left: 100%;
-    transform: translate(-50%, -50%);
-    width: 60px;
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    pointer-events: none;
-    z-index: 1;
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .glow {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: url("assets/burbuja.png") no-repeat center center;
-    background-size: contain;
-    z-index: 1;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url("assets/burbuja.png") no-repeat center center;
+  background-size: contain;
+  z-index: 1;
 }
 
 .percentage {
-    position: relative;
-    font-size: 16px;
-    color: #b0f5e5;
-    font-weight: bold;
-    text-shadow: 0 0 5px #00ffd0;
-    z-index: 2;
+  position: relative;
+  font-size: 16px;
+  color: #b0f5e5;
+  font-weight: bold;
+  text-shadow: 0 0 5px #00ffd0;
+  z-index: 2;
 }
 
 .logo-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: absolute;
-    bottom: 180px; 
-    left: 0;
-    right: 0;
-    transform: scale(0.9);
-    margin-top: 20px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  bottom: 180px;
+  left: 0;
+  right: 0;
+  transform: scale(0.9);
+  margin-top: 20px;
 }
 
 .tridente {
-    height: 100px;
+  height: 100px;
 }
 
 .atlantis {
-    height: 60px;
-    margin-top: -30px;
+  height: 60px;
+  margin-top: -30px;
 }
 
-/* 📱 Versión de escritorio */
-@media screen and (min-width: 601px) {
-    .logo-container {
-        bottom: 200px; 
-        transform: scale(1.1); 
-    }
-    
-    .progress-container {
-        max-width: 500px; 
-    }
+/* ==================== PANTALLA DE JUEGO ==================== */
+.game-screen {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: url("assets/bg-mesa.png") no-repeat center center;
+  background-size: cover;
 }
 
-/* 📱 Versión móvil */
-@media screen and (max-width: 600px) {
-    .progress-container {
-        max-width: 280px;
-        height: 8px;
-    }
+.ruleta-wrapper {
+  position: relative;
+  width: 90vw;
+  max-width: 400px;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+}
 
-    .footer-logo {
-        transform: scale(1.5);
-    }
+.ruleta-contenedor {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    .tridente {
-        height: 90px;
-    }
+canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
 
-    .atlantis {
-        height: 50px;
-    }
+.puntero {
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  z-index: 5;
+}
+
+#girar-btn {
+  margin-top: 30px;
+  padding: 14px 36px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(to bottom, #00ffd0, #00c780);
+  color: #005f4e;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+#girar-btn:hover {
+  background: linear-gradient(to bottom, #00c780, #00ffd0);
+}
+
+/* ==================== MEDIA QUERIES ==================== */
+@media screen and (max-width: 400px) {
+  .ruleta-wrapper {
+    max-width: 300px;
+  }
+
+  .puntero {
+    width: 40px;
+    top: -18px;
+  }
+
+  #girar-btn {
+    font-size: 1rem;
+    padding: 12px 28px;
+    margin-top: 24px;
+  }
+
+  .tridente {
+    height: 80px;
+  }
+
+  .atlantis {
+    height: 50px;
+  }
 }
