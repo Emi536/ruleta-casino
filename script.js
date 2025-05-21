@@ -1,14 +1,19 @@
 let fill = document.getElementById("progress-fill");
 let text = document.getElementById("progress-text");
+let bubble = text.parentElement;
 let percent = 0;
 
 let interval = setInterval(() => {
-  percent++;
-  fill.style.width = percent + "%";
-  text.innerText = percent + "%";
-  fill.querySelector(".glow-bubble").style.left = `calc(${percent}% - 30px)`;
-  
-  if (percent >= 100) {
-    clearInterval(interval);
-  }
+    percent++;
+
+    // Ajusta el porcentaje de carga
+    fill.style.width = percent + "%";
+    text.innerText = percent + "%";
+
+    // Mueve la burbuja dinámica
+    bubble.style.left = percent + "%";
+
+    if (percent >= 100) {
+        clearInterval(interval);
+    }
 }, 40);
