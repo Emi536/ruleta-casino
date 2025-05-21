@@ -8,7 +8,7 @@ body, html {
 .loading-screen {
     position: relative;
     width: 100%;
-    min-height: 100vh; /* ✅ permite crecer verticalmente */
+    height: 100vh;
     overflow: hidden;
 }
 
@@ -27,13 +27,11 @@ body, html {
     z-index: 2;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    justify-content: flex-start;
-    padding-top: 0;
-}
-
-#espaciador {
-    height: 440px; /* ⬆️ espacio debajo de "RULETA DE LA SUERTE" */
+    height: 100vh;
+    padding: 60px 0;
+    box-sizing: border-box;
 }
 
 .progress-container {
@@ -41,7 +39,7 @@ body, html {
     max-width: 400px;
     height: 10px;
     position: relative;
-    margin: 0 auto 80px auto;
+    margin: 0 auto;
 }
 
 .progress-bar {
@@ -70,7 +68,7 @@ body, html {
     width: 60px;
     height: 60px;
     display: flex;
-    justify-content: center; /* 🔧 corregido (antes tenía un guion de más) */
+    justify-content: center;
     align-items: center;
     pointer-events: none;
     z-index: 1;
@@ -98,9 +96,8 @@ body, html {
     display: flex;
     flex-direction: column;
     align-items: center;
-    transform: scale(1.6);
-    margin-top: auto;
-    margin-bottom: 40px;
+    transform: scale(1.2);
+    margin-bottom: 0;
 }
 
 .tridente {
@@ -114,19 +111,13 @@ body, html {
 
 /* 📱 Responsive */
 @media screen and (max-width: 600px) {
-    #espaciador {
-        height: 360px;
-    }
-
     .progress-container {
         max-width: 280px;
         height: 8px;
-        margin-bottom: 60px;
     }
 
     .footer-logo {
-        transform: scale(1.8);
-        margin-bottom: 30px;
+        transform: scale(1.5);
     }
 
     .tridente {
