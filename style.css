@@ -27,11 +27,12 @@ body, html {
     z-index: 2;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
     height: 100vh;
-    padding: 60px 0;
+    padding: 20px;
     box-sizing: border-box;
+    justify-content: center;
+    margin-top: 100px; /* Aumentado para bajar todo el contenido */
 }
 
 .progress-container {
@@ -40,6 +41,7 @@ body, html {
     height: 10px;
     position: relative;
     margin: 0 auto;
+    margin-top: 100px; /* Aumentado para bajar la barra de carga */
 }
 
 .progress-bar {
@@ -92,24 +94,40 @@ body, html {
     z-index: 2;
 }
 
-.footer-logo {
+.logo-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    transform: scale(1.2);
-    margin-bottom: 0;
+    position: absolute;
+    bottom: 180px; 
+    left: 0;
+    right: 0;
+    transform: scale(0.9);
+    margin-top: 20px; 
 }
 
 .tridente {
-    height: 80px;
+    height: 100px;
 }
 
 .atlantis {
-    height: 40px;
-    margin-top: -10px;
+    height: 60px;
+    margin-top: -30px;
 }
 
-/* 📱 Responsive */
+/* 📱 Versión de escritorio */
+@media screen and (min-width: 601px) {
+    .logo-container {
+        bottom: 200px; 
+        transform: scale(1.1); 
+    }
+    
+    .progress-container {
+        max-width: 500px; 
+    }
+}
+
+/* 📱 Versión móvil */
 @media screen and (max-width: 600px) {
     .progress-container {
         max-width: 280px;
