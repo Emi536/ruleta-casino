@@ -34,10 +34,11 @@ body, html {
 }
 
 .progress-container {
-    width: 737px;
-    height: 19px;
+    width: 90%;
+    max-width: 400px;
+    height: 14px;
     position: relative;
-    margin-bottom: 40px;
+    margin-bottom: 60px;
 }
 
 .progress-bar {
@@ -47,7 +48,7 @@ body, html {
     background-size: cover;
     border-radius: 10px;
     position: relative;
-    overflow: visible; /* ✅ importante para que no se corte la burbuja */
+    overflow: visible;
 }
 
 .progress-fill {
@@ -59,7 +60,7 @@ body, html {
 
 .progress-bubble {
     position: absolute;
-    top: 50%; /* ✅ centrado vertical sobre la barra */
+    top: 50%;
     left: 100%;
     transform: translate(-50%, -50%);
     width: 60px;
@@ -92,15 +93,38 @@ body, html {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0px; /* 🔧 Sin espacio entre tridente y logo */
-    margin-top: 10px; /* (opcional) subir todo el bloque si hace falta */
+    gap: 0px;
+    margin-top: 30px;
+    transform: scale(1.4);
 }
 
 .tridente {
-    height: 60px;
+    height: 80px;
 }
 
 .atlantis {
-    height: 35px;
-    margin-top: -8px; /* 🔧 Subir el logo para que quede pegado */
+    height: 40px;
+    margin-top: -10px;
+}
+
+/* ✅ Responsive para pantallas chicas (móviles) */
+@media screen and (max-width: 600px) {
+    .progress-container {
+        max-width: 280px;
+        height: 12px;
+        margin-bottom: 40px;
+    }
+
+    .footer-logo {
+        transform: scale(1.6);
+        margin-top: 20px;
+    }
+
+    .tridente {
+        height: 90px;
+    }
+
+    .atlantis {
+        height: 50px;
+    }
 }
