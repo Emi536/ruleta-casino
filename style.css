@@ -1,134 +1,130 @@
 body, html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: "Montserrat Roman", sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: "Montserrat Roman", sans-serif;
 }
 
 .loading-screen {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
 }
 
 .background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
 }
 
 .content {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end; /* Empuja hacia abajo */
-  align-items: center;
-  height: 100vh;
-  padding-bottom: 40px;
-  box-sizing: border-box;
-}
-
-.bottom-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 30px; /* Espacio entre barra y logo */
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    padding: 60px 0;
+    box-sizing: border-box;
 }
 
 .progress-container {
-  width: 90%;
-  max-width: 400px;
-  height: 10px;
-  position: relative;
+    width: 90%;
+    max-width: 400px;
+    height: 10px;
+    position: relative;
+    margin: 0 auto;
 }
 
 .progress-bar {
-  width: 100%;
-  height: 100%;
-  background: url("assets/barra.png") no-repeat;
-  background-size: cover;
-  border-radius: 10px;
-  position: relative;
-  overflow: visible;
+    width: 100%;
+    height: 100%;
+    background: url("assets/barra.png") no-repeat;
+    background-size: cover;
+    border-radius: 10px;
+    position: relative;
+    overflow: visible;
 }
 
 .progress-fill {
-  height: 100%;
-  width: 0%;
-  position: relative;
-  transition: width 0.4s ease;
-  z-index: 0;
+    height: 100%;
+    width: 0%;
+    position: relative;
+    transition: width 0.4s ease;
+    z-index: 0;
 }
 
 .progress-bubble {
-  position: absolute;
-  top: 50%;
-  left: 100%;
-  transform: translate(-50%, -50%);
-  width: 60px;
-  height: 60px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  pointer-events: none;
-  z-index: 1;
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    z-index: 1;
 }
 
 .glow {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: url("assets/burbuja.png") no-repeat center center;
-  background-size: contain;
-  z-index: 1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url("assets/burbuja.png") no-repeat center center;
+    background-size: contain;
+    z-index: 1;
 }
 
 .percentage {
-  position: relative;
-  font-size: 16px;
-  color: #b0f5e5;
-  font-weight: bold;
-  text-shadow: 0 0 5px #00ffd0;
-  z-index: 2;
+    position: relative;
+    font-size: 16px;
+    color: #b0f5e5;
+    font-weight: bold;
+    text-shadow: 0 0 5px #00ffd0;
+    z-index: 2;
 }
 
 .footer-logo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transform: scale(1.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: scale(1.2);
+    margin-bottom: 0;
 }
 
 .tridente {
-  height: 80px;
+    height: 80px;
 }
 
 .atlantis {
-  height: 40px;
-  margin-top: -10px;
+    height: 40px;
+    margin-top: -10px;
 }
 
+/* 📱 Responsive */
 @media screen and (max-width: 600px) {
-  .progress-container {
-    max-width: 280px;
-    height: 8px;
-  }
+    .progress-container {
+        max-width: 280px;
+        height: 8px;
+    }
 
-  .footer-logo {
-    transform: scale(1.5);
-  }
+    .footer-logo {
+        transform: scale(1.5);
+    }
 
-  .tridente {
-    height: 90px;
-  }
+    .tridente {
+        height: 90px;
+    }
 
-  .atlantis {
-    height: 50px;
-  }
+    .atlantis {
+        height: 50px;
+    }
 }
