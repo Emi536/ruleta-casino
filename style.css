@@ -30,16 +30,8 @@ body, html {
     justify-content: space-between;
     align-items: center;
     height: 100vh;
-    padding: 0 0 40px 0;
+    padding: 60px 0;
     box-sizing: border-box;
-}
-
-/* Centra la barra entre el fondo y el logo */
-.middle {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .progress-container {
@@ -47,6 +39,7 @@ body, html {
     max-width: 400px;
     height: 10px;
     position: relative;
+    margin: 0 auto;
 }
 
 .progress-bar {
@@ -104,6 +97,7 @@ body, html {
     flex-direction: column;
     align-items: center;
     transform: scale(1.2);
+    margin-bottom: 0;
 }
 
 .tridente {
