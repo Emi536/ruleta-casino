@@ -1,31 +1,39 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Ruleta de la Suerte - Cargando</title>
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ruleta de la Suerte - Cargando</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="loading-screen">
-        <img src="assets/fondo.png" alt="Fondo" class="background"/>
-        <div class="content">
-            <div class="progress-container">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progress-fill">
-                        <div class="progress-bubble">
-                            <div class="glow"></div>
-                            <div class="percentage" id="progress-text">0%</div>
-                        </div>
-                    </div>
-                </div>
+  <div class="loading-screen">
+    <img src="assets/fondo.png" alt="Fondo" class="background"/>
+
+    <div class="content">
+      <!-- Espaciador para dejar libre el título del fondo -->
+      <div id="espaciador"></div>
+
+      <!-- Barra de progreso -->
+      <div class="progress-container">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill">
+            <div class="progress-bubble">
+              <div class="glow"></div>
+              <div class="percentage" id="progress-text">0%</div>
             </div>
-            <div class="footer-logo">
-                <img src="assets/tridente.png" alt="Tridente" class="tridente"/>
-                <img src="assets/logo.png" alt="Atlantis Play" class="atlantis"/>
-            </div>
+          </div>
         </div>
+      </div>
+
+      <!-- Logo ATLANTIS PLAY + tridente -->
+      <div class="footer-logo">
+        <img src="assets/tridente.png" alt="Tridente" class="tridente"/>
+        <img src="assets/logo.png" alt="Atlantis Play" class="atlantis"/>
+      </div>
     </div>
-    <script src="script.js"></script>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
