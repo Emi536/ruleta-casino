@@ -57,15 +57,17 @@ body, html {
     transition: width 0.4s ease;
 }
 
-.progress-text {
+/* ✅ BURBUJA flotante del % */
+.progress-bubble {
     position: absolute;
-    width: 100%;
-    text-align: center;
-    top: -40px;
+    top: -50px; /* flotando arriba */
+    transform: translateX(-50%);
     color: #9ed8c8;
     font-size: 34px;
     line-height: 59px;
     font-family: "Montserrat Roman", sans-serif;
+    text-align: center;
+    pointer-events: none;
 }
 
 .footer-logo {
