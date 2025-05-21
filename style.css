@@ -33,7 +33,7 @@ body, html {
 }
 
 #espaciador {
-    height: 300px; /* ⬆️ espacio para dejar libre el texto de fondo */
+    height: 440px; /* ⬆️ espacio para dejar libre el texto de fondo */
 }
 
 .progress-container {
