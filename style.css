@@ -43,38 +43,57 @@ body, html {
 .progress-bar {
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(90deg, #177d6a 0%, #1fb9a3 100%);
+    background: url("assets/barra.png") no-repeat;
+    background-size: cover;
     border-radius: 10px;
     position: relative;
-    overflow: hidden;
+    overflow: visible; /* ✅ importante para que no se corte la burbuja */
 }
 
 .progress-fill {
     height: 100%;
-    background: rgba(255, 255, 255, 0.15);
     width: 0%;
-    border-radius: 10px;
+    position: relative;
     transition: width 0.4s ease;
 }
 
-/* ✅ BURBUJA flotante del % */
 .progress-bubble {
     position: absolute;
-    top: -50px; /* flotando arriba */
-    transform: translateX(-50%);
-    color: #9ed8c8;
-    font-size: 34px;
-    line-height: 59px;
-    font-family: "Montserrat Roman", sans-serif;
-    text-align: center;
+    top: 50%; /* ✅ centrado vertical sobre la barra */
+    left: 100%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     pointer-events: none;
+}
+
+.glow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url("assets/burbuja.png") no-repeat center center;
+    background-size: contain;
+    z-index: 1;
+}
+
+.percentage {
+    position: relative;
+    font-size: 18px;
+    color: #b0f5e5;
+    font-weight: bold;
+    text-shadow: 0 0 5px #00ffd0;
+    z-index: 2;
 }
 
 .footer-logo {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 0px; /* 🔧 Sin espacio entre tridente y logo */
+    margin-top: 10px; /* (opcional) subir todo el bloque si hace falta */
 }
 
 .tridente {
@@ -83,4 +102,5 @@ body, html {
 
 .atlantis {
     height: 35px;
+    margin-top: -8px; /* 🔧 Subir el logo para que quede pegado */
 }
