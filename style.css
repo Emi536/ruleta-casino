@@ -8,7 +8,7 @@ body, html {
 .loading-screen {
     position: relative;
     width: 100%;
-    min-height: 100vh; /* ✅ CAMBIO CLAVE: permitir altura total del viewport */
+    min-height: 100vh; /* ✅ permite crecer verticalmente */
     overflow: hidden;
 }
 
@@ -33,7 +33,7 @@ body, html {
 }
 
 #espaciador {
-    height: 440px; /* ⬆️ espacio para dejar libre el texto de fondo */
+    height: 440px; /* ⬆️ espacio debajo de "RULETA DE LA SUERTE" */
 }
 
 .progress-container {
@@ -41,7 +41,7 @@ body, html {
     max-width: 400px;
     height: 10px;
     position: relative;
-    margin: 0 auto 80px auto; /* espacio debajo de la barra */
+    margin: 0 auto 80px auto;
 }
 
 .progress-bar {
@@ -59,6 +59,7 @@ body, html {
     width: 0%;
     position: relative;
     transition: width 0.4s ease;
+    z-index: 0;
 }
 
 .progress-bubble {
@@ -69,9 +70,10 @@ body, html {
     width: 60px;
     height: 60px;
     display: flex;
-    justify-: center;
+    justify-content: center; /* 🔧 corregido (antes tenía un guion de más) */
     align-items: center;
     pointer-events: none;
+    z-index: 1;
 }
 
 .glow {
