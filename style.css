@@ -113,7 +113,7 @@ body, html {
 /* 📱 Responsive */
 @media screen and (max-width: 600px) {
     #espaciador {
-        height: 240px;
+        height: 360px;
     }
 
     .progress-container {
