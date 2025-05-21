@@ -8,7 +8,7 @@ body, html {
 .loading-screen {
     position: relative;
     width: 100%;
-    height: 100%;
+    min-height: 100vh; /* ✅ CAMBIO CLAVE: permitir altura total del viewport */
     overflow: hidden;
 }
 
@@ -28,8 +28,8 @@ body, html {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100%;
     justify-content: flex-start;
+    padding-top: 0;
 }
 
 #espaciador {
@@ -69,7 +69,7 @@ body, html {
     width: 60px;
     height: 60px;
     display: flex;
-    justify-content: center;
+    justify-: center;
     align-items: center;
     pointer-events: none;
 }
