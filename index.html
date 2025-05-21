@@ -1,17 +1,22 @@
+<!-- 📄 index.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ruleta de la Suerte - Cargando</title>
+  <title>Ruleta Atlantis</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/zarocknz/javascript-winwheel@master/Winwheel.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-  <div class="loading-screen">
+
+  <!-- Pantalla de carga -->
+  <div class="loading-screen" id="loading">
     <img src="assets/fondo.png" alt="Fondo" class="background"/>
 
     <div class="content">
-      <!-- Barra de progreso -->
       <div class="progress-container">
         <div class="progress-bar">
           <div class="progress-fill" id="progress-fill"></div>
@@ -28,6 +33,17 @@
         <img src="assets/logo.png" alt="Atlantis Play" class="atlantis"/>
       </div>
     </div>
+  </div>
+
+  <!-- Pantalla de juego -->
+  <div class="game-screen" id="game">
+    <div class="ruleta-wrapper">
+      <img src="assets/flecha.png" class="puntero" alt="Puntero">
+      <div class="ruleta-contenedor">
+        <canvas id="canvas" width="400" height="400"></canvas>
+      </div>
+    </div>
+    <button id="girar-btn">GIRAR</button>
   </div>
 
   <script src="script.js"></script>
