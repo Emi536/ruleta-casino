@@ -27,10 +27,13 @@ body, html {
     z-index: 2;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* ⬅️ empieza desde arriba */
     align-items: center;
     height: 100%;
-    padding-top: 60px; /* ⬆️ espacio desde el borde superior */
+    justify-content: flex-start;
+}
+
+#espaciador {
+    height: 300px; /* ⬆️ espacio para dejar libre el texto de fondo */
 }
 
 .progress-container {
@@ -38,7 +41,7 @@ body, html {
     max-width: 400px;
     height: 10px;
     position: relative;
-    margin: 120px 0 60px 0; /* ⬆️ espacio entre título y barra, barra y logo ⬇️ */
+    margin: 0 auto 80px auto; /* espacio debajo de la barra */
 }
 
 .progress-bar {
@@ -93,9 +96,9 @@ body, html {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0px;
-    margin-top: 0;
-    transform: scale(1.6); /* ✅ agrandado sin superposición */
+    transform: scale(1.6);
+    margin-top: auto;
+    margin-bottom: 40px;
 }
 
 .tridente {
@@ -107,17 +110,21 @@ body, html {
     margin-top: -10px;
 }
 
-/* 📱 Responsive para celulares */
+/* 📱 Responsive */
 @media screen and (max-width: 600px) {
+    #espaciador {
+        height: 240px;
+    }
+
     .progress-container {
         max-width: 280px;
         height: 8px;
-        margin: 100px 0 40px 0;
+        margin-bottom: 60px;
     }
 
     .footer-logo {
         transform: scale(1.8);
-        margin-top: 0;
+        margin-bottom: 30px;
     }
 
     .tridente {
