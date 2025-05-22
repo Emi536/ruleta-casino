@@ -205,8 +205,8 @@ canvas {
   }
 
   .puntero {
-    width: 40px;
-    top: -18px;
+    width: 42px;
+    transform: translate(-50%, -62%);
   }
 
   #girar-btn {
