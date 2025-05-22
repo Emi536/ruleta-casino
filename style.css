@@ -176,10 +176,11 @@ canvas {
 
 .puntero {
   position: absolute;
-  top: -0;
+  top: -0%; /* mejor que -30px */
   left: 50%;
-  transform: translate(-50%, -62%);
-  width: 50px;
+  transform: translateX(-50%);
+  width: 15%;
+  max-width: 60px;
   z-index: 10;
   pointer-events: none;
 }
@@ -208,8 +209,8 @@ canvas {
   }
 
   .puntero {
-    width: 42px;
-    transform: translate(-50%, -62%);
+    top: -0%;
+    width: 15%;
   }
 
   #girar-btn {
