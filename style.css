@@ -174,11 +174,12 @@ canvas {
 
 .puntero {
   position: absolute;
-  top: -22px;
+  top: 0;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -62%);
   width: 50px;
-  z-index: 5;
+  z-index: 10;
+  pointer-events: none;
 }
 
 #girar-btn {
