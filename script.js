@@ -1,69 +1,160 @@
-// 🔁 script.js
-let fill = document.getElementById("progress-fill");
-let text = document.getElementById("progress-text");
-let bubble = text.parentElement;
-let percent = 0;
+window.addEventListener("DOMContentLoaded", () => {
+  const fill = document.getElementById("progress-fill");
+  const text = document.getElementById("progress-text");
+  const bubble = document.getElementById("progress-bubble");
+  let percent = 0;
 
-let interval = setInterval(() => {
-  percent++;
+  const interval = setInterval(() => {
+    percent++;
+    fill.style.width = percent + "%";
+    text.innerText = percent + "%";
+    bubble.style.left = percent + "%";
 
-  // Ajustar porcentaje de carga
-  fill.style.width = percent + "%";
-  text.innerText = percent + "%";
-  bubble.style.left = percent + "%";
+    if (percent >= 100) {
+      clearInterval(interval);
+      document.getElementById("loading").style.display = "none";
+      document.getElementById("game").style.display = "flex"; // o "block" si usás display block
+    }
+  }, 40); // velocidad ajustable
+});
 
-  if (percent >= 100) {
-    clearInterval(interval);
-    document.getElementById("loading").style.display = "none";
-    document.getElementById("game").style.display = "flex";
-  }
-}, 40);
 
-// 🎡 Configuración de premios y ruleta
+// 🎯 Premios y lógica angular
 const premios = [
-  { text: '100% BONO', fill: '#ffffff', textFillStyle: '#005f4e' },
-  { text: '150% BONO', fill: '#005f4e', textFillStyle: '#ffffff' },
-  { text: '200% BONO', fill: '#ffffff', textFillStyle: '#005f4e' },
-  { text: 'OTRO GIRO', fill: '#005f4e', textFillStyle: '#ffffff' },
-  { text: '30% BONO', fill: '#ffffff', textFillStyle: '#005f4e' },
-  { text: '50% BONO', fill: '#005f4e', textFillStyle: '#ffffff' }
+  { nombre: "100% BONO", angulo: 0 },
+  { nombre: "150% BONO", angulo: 60 },
+  { nombre: "200% BONO", angulo: 120 },
+  { nombre: "OTRO GIRO", angulo: 180 },
+  { nombre: "30% BONO", angulo: 240 },
+  { nombre: "50% BONO", angulo: 300 }
 ];
 
-const ruleta = new Winwheel({
-  canvasId: 'canvas',
-  numSegments: premios.length,
-  outerRadius: 140,
-  segments: premios.map(p => ({
-    fillStyle: p.fill,
-    text: p.text,
-    textFillStyle: p.textFillStyle
-  })),
-  textFontSize: 18,
-  textFontFamily: 'Montserrat',
-  textAlignment: 'outer',
-  animation: {
-    type: 'spinToStop',
-    duration: 5,
-    spins: 7,
-    callbackFinished: mostrarPremio
-  }
-});
+// 🎼 Audios
+const musica = document.getElementById("musica-fondo");
+const sonidoRuleta = document.getElementById("sonido-ruleta");
+const sonidoGanador = document.getElementById("sonido-ganador"); // NUEVO
 
+// 🔉 Fade out
+function fadeOut(audio, duration = 1000) {
+  let step = 0.05;
+  const interval = setInterval(() => {
+    if (audio.volume > step) {
+      audio.volume = Math.max(0, audio.volume - step);
+    } else {
+      audio.volume = 0;
+      audio.pause();
+      clearInterval(interval);
+    }
+  }, duration * step);
+}
+
+// 🔊 Fade in
+function fadeIn(audio, volumeTarget = 0.4, duration = 1000) {
+  audio.volume = 0;
+  audio.play();
+  let step = 0.05;
+  const interval = setInterval(() => {
+    if (audio.volume < volumeTarget - step) {
+      audio.volume = Math.min(volumeTarget, audio.volume + step);
+    } else {
+      audio.volume = volumeTarget;
+      clearInterval(interval);
+    }
+  }, duration * step);
+}
+
+function detectarPremioPorAngulo(angulo) {
+  const ang = angulo % 360;
+  if (ang >= 330 || ang < 30) return "100% BONO";
+  if (ang >= 30 && ang < 90) return "50% BONO";
+  if (ang >= 90 && ang < 150) return "30% BONO";
+  if (ang >= 150 && ang < 210) return "OTRO GIRO";
+  if (ang >= 210 && ang < 270) return "200% BONO";
+  if (ang >= 270 && ang < 330) return "150% BONO";
+}
+
+// 🎡 Girar la ruleta sincronizada con el audio
 document.getElementById("girar-btn").addEventListener("click", () => {
-  ruleta.stopAnimation(false);
-  ruleta.rotationAngle = 0;
-  ruleta.draw();
-  ruleta.startAnimation();
+  const premio = premios[Math.floor(Math.random() * premios.length)];
+  const ruleta = document.getElementById("ruleta");
+
+  fadeOut(musica); // 🎧
+
+  sonidoRuleta.currentTime = 0;
+  sonidoRuleta.volume = 0.7;
+
+  sonidoRuleta.play().then(() => {
+    const duracion = sonidoRuleta.duration;
+    const tiempoRapido = Math.max(duracion - 4.8, 0);
+    const vueltasRapidas = 6 * tiempoRapido;
+    const gradosRapidos = 360 * vueltasRapidas;
+
+    const gradosLentos = 720; // desaceleración final
+    const gradosFinales = gradosRapidos + gradosLentos + premio.angulo;
+
+    // 🔄 Reset visual
+    ruleta.style.transition = "none";
+    ruleta.style.transform = "rotate(0deg)";
+    void ruleta.offsetWidth;
+
+    // 🌀 Giro rápido
+    ruleta.style.transition = `transform ${tiempoRapido}s linear`;
+    ruleta.style.transform = `rotate(${gradosRapidos}deg)`;
+
+    // 🌀 Desaceleración
+    setTimeout(() => {
+      ruleta.style.transition = "transform 5s cubic-bezier(0.1, 0.9, 0.3, 1)";
+      ruleta.style.transform = `rotate(${gradosFinales}deg)`;
+    }, tiempoRapido * 1000);
+
+    // 🏁 Al finalizar el audio
+    sonidoRuleta.onended = () => {
+      // ▶️ Reproducir sonido de ganador
+      if (sonidoGanador) {
+        sonidoGanador.currentTime = 0;
+        sonidoGanador.volume = 0.9;
+        sonidoGanador.play().catch(() => {});
+      }
+
+      // 🎁 Mostrar premio
+      const premioObtenido = detectarPremioPorAngulo(gradosFinales);
+      mostrarPopup(premioObtenido);
+    };
+  }).catch(err => {
+    console.error("Error al reproducir el sonido de ruleta:", err);
+  });
 });
 
-function mostrarPremio(segment) {
-  Swal.fire({
-    title: '🎉 Premio obtenido',
-    text: segment.text,
-    icon: 'success',
-    background: '#003f36',
-    color: '#00ffd0',
-    confirmButtonText: 'Aceptar',
-    confirmButtonColor: '#00ffd0'
+// ✅ Mostrar popup de premio
+function mostrarPopup(premioObtenido) {
+  const popup = document.getElementById("popup-premio");
+  const texto = document.getElementById("texto-premio");
+
+  texto.textContent = premioObtenido;
+  popup.classList.remove("hidden");
+
+  if (!sonidoRuleta.paused) {
+    sonidoRuleta.pause();
+    sonidoRuleta.currentTime = 0;
+  }
+
+  const popupBox = popup.querySelector(".popup");
+  popupBox.style.animation = "none";
+  void popupBox.offsetWidth;
+  popupBox.style.animation = "popupEntrada 0.5s ease-out, popupPulse 1.5s ease-in-out infinite";
+
+  confetti({
+    particleCount: 150,
+    spread: 90,
+    startVelocity: 45,
+    origin: { y: 0.6 },
+    colors: ['#00ffd0', '#00c780', '#ffffff'],
+    zIndex: 1000
   });
+}
+
+// ❌ Cerrar popup
+function cerrarPopup() {
+  document.getElementById("popup-premio").classList.add("hidden");
+  fadeIn(musica); // 🎧
 }
