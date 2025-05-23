@@ -1,3 +1,4 @@
+// ------------------------ PANTALLA DE CARGA ------------------------
 window.addEventListener("DOMContentLoaded", () => {
   const fill = document.getElementById("progress-fill");
   const text = document.getElementById("progress-text");
@@ -13,13 +14,12 @@ window.addEventListener("DOMContentLoaded", () => {
     if (percent >= 100) {
       clearInterval(interval);
       document.getElementById("loading").style.display = "none";
-      document.getElementById("game").style.display = "flex"; // o "block" si usás display block
+      document.getElementById("game").style.display = "flex";
     }
-  }, 40); // velocidad ajustable
+  }, 40);
 });
 
-
-// 🎯 Premios y lógica angular
+// ------------------------ VARIABLES ------------------------
 const premios = [
   { nombre: "100% BONO", angulo: 0 },
   { nombre: "150% BONO", angulo: 60 },
@@ -29,12 +29,15 @@ const premios = [
   { nombre: "50% BONO", angulo: 300 }
 ];
 
-// 🎼 Audios
 const musica = document.getElementById("musica-fondo");
 const sonidoRuleta = document.getElementById("sonido-ruleta");
-const sonidoGanador = document.getElementById("sonido-ganador"); // NUEVO
+const sonidoGanador = document.getElementById("sonido-ganador");
 
-// 🔉 Fade out
+const hoy = new Date().toISOString().split("T")[0];
+let permitirReintento = false;
+let yaGiro = localStorage.getItem("ultimoGiro") === hoy;
+
+// ------------------------ EFECTOS DE AUDIO ------------------------
 function fadeOut(audio, duration = 1000) {
   let step = 0.05;
   const interval = setInterval(() => {
@@ -48,7 +51,6 @@ function fadeOut(audio, duration = 1000) {
   }, duration * step);
 }
 
-// 🔊 Fade in
 function fadeIn(audio, volumeTarget = 0.4, duration = 1000) {
   audio.volume = 0;
   audio.play();
@@ -63,6 +65,7 @@ function fadeIn(audio, volumeTarget = 0.4, duration = 1000) {
   }, duration * step);
 }
 
+// ------------------------ DETECCIÓN DE PREMIO ------------------------
 function detectarPremioPorAngulo(angulo) {
   const ang = angulo % 360;
   if (ang >= 330 || ang < 30) return "100% BONO";
@@ -73,12 +76,21 @@ function detectarPremioPorAngulo(angulo) {
   if (ang >= 270 && ang < 330) return "150% BONO";
 }
 
-// 🎡 Girar la ruleta sincronizada con el audio
+// ------------------------ BOTÓN DE GIRO ------------------------
 document.getElementById("girar-btn").addEventListener("click", () => {
+  if (yaGiro && !permitirReintento) {
+    mostrarPopupAviso(); // 🌊 mensaje personalizado
+    return;
+  }
+  iniciarGiro();
+});
+
+// ------------------------ GIRO DE RULETA ------------------------
+function iniciarGiro() {
   const premio = premios[Math.floor(Math.random() * premios.length)];
   const ruleta = document.getElementById("ruleta");
 
-  fadeOut(musica); // 🎧
+  fadeOut(musica);
 
   sonidoRuleta.currentTime = 0;
   sonidoRuleta.volume = 0.7;
@@ -88,44 +100,43 @@ document.getElementById("girar-btn").addEventListener("click", () => {
     const tiempoRapido = Math.max(duracion - 4.8, 0);
     const vueltasRapidas = 6 * tiempoRapido;
     const gradosRapidos = 360 * vueltasRapidas;
-
-    const gradosLentos = 720; // desaceleración final
+    const gradosLentos = 720;
     const gradosFinales = gradosRapidos + gradosLentos + premio.angulo;
 
-    // 🔄 Reset visual
+    // Reset visual
     ruleta.style.transition = "none";
     ruleta.style.transform = "rotate(0deg)";
     void ruleta.offsetWidth;
 
-    // 🌀 Giro rápido
+    // Giro rápido
     ruleta.style.transition = `transform ${tiempoRapido}s linear`;
     ruleta.style.transform = `rotate(${gradosRapidos}deg)`;
 
-    // 🌀 Desaceleración
+    // Desaceleración
     setTimeout(() => {
       ruleta.style.transition = "transform 5s cubic-bezier(0.1, 0.9, 0.3, 1)";
       ruleta.style.transform = `rotate(${gradosFinales}deg)`;
     }, tiempoRapido * 1000);
 
-    // 🏁 Al finalizar el audio
+    // Al terminar el sonido
     sonidoRuleta.onended = () => {
-      // ▶️ Reproducir sonido de ganador
-      if (sonidoGanador) {
-        sonidoGanador.currentTime = 0;
-        sonidoGanador.volume = 0.9;
-        sonidoGanador.play().catch(() => {});
-      }
-
-      // 🎁 Mostrar premio
       const premioObtenido = detectarPremioPorAngulo(gradosFinales);
       mostrarPopup(premioObtenido);
+
+      if (premioObtenido === "OTRO GIRO") {
+        permitirReintento = true;
+      } else {
+        localStorage.setItem("ultimoGiro", hoy);
+        permitirReintento = false;
+        yaGiro = true;
+      }
     };
   }).catch(err => {
     console.error("Error al reproducir el sonido de ruleta:", err);
   });
-});
+}
 
-// ✅ Mostrar popup de premio
+// ------------------------ MOSTRAR POPUP DE PREMIO ------------------------
 function mostrarPopup(premioObtenido) {
   const popup = document.getElementById("popup-premio");
   const texto = document.getElementById("texto-premio");
@@ -153,8 +164,24 @@ function mostrarPopup(premioObtenido) {
   });
 }
 
-// ❌ Cerrar popup
+// ------------------------ CERRAR POPUP DE PREMIO ------------------------
 function cerrarPopup() {
   document.getElementById("popup-premio").classList.add("hidden");
-  fadeIn(musica); // 🎧
+  fadeIn(musica);
+}
+
+// ------------------------ MOSTRAR POPUP AVISO 🌊 ------------------------
+function mostrarPopupAviso() {
+  const popup = document.getElementById("popup-aviso");
+  popup.classList.remove("hidden");
+
+  const popupBox = popup.querySelector(".popup");
+  popupBox.style.animation = "none";
+  void popupBox.offsetWidth;
+  popupBox.style.animation = "popupEntrada 0.5s ease-out, popupPulse 1.5s ease-in-out infinite";
+}
+
+// ------------------------ CERRAR POPUP AVISO ------------------------
+function cerrarPopupAviso() {
+  document.getElementById("popup-aviso").classList.add("hidden");
 }
