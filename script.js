@@ -120,6 +120,13 @@ function iniciarGiro() {
 
     // Al terminar el sonido
     sonidoRuleta.onended = () => {
+      // 🔊 Reproducir sonido de ganador (corregido)
+      if (sonidoGanador) {
+        sonidoGanador.currentTime = 0;
+        sonidoGanador.volume = 0.9;
+        sonidoGanador.play().catch(() => {});
+      }
+
       const premioObtenido = detectarPremioPorAngulo(gradosFinales);
       mostrarPopup(premioObtenido);
 
