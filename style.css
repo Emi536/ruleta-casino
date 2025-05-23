@@ -52,84 +52,74 @@ body, html {
 .progress-container {
   width: 90%;
   max-width: 400px;
-  height: 10px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 5px;
-  margin-top: 40px;
+  height: 19px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
   position: relative;
 }
+
 
 .progress-bar {
   width: 100%;
   height: 100%;
-  background: url("assets/barra.png") no-repeat;
-  background-size: cover;
-  border-radius: 10px;
   position: relative;
-  overflow: visible;
+  background: transparent;
+  border-radius: 30px;
 }
 
 .progress-fill {
   height: 100%;
-  width: 0%;
-  background: #00ffd0;
-  border-radius: 5px;
-  transition: width 0.4s ease;
-  position: relative;
-  z-index: 0;
-}
+  background-image: linear-gradient(90deg, #177d6a 0%, #1fb9a3 100%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
 
+  /* 💡 flecha real */
+  clip-path: polygon(0 0, 95% 0, 100% 50%, 95% 100%, 0 100%);
+  transition: width 0.1s linear;
+}
 .progress-bubble {
   position: absolute;
   top: 50%;
   left: 100%;
   transform: translate(-50%, -50%);
-  width: 60px;
-  height: 60px;
   display: flex;
   justify-content: center;
   align-items: center;
   pointer-events: none;
-  z-index: 1;
-}
-
-.glow {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: url("assets/burbuja.png") no-repeat center center;
-  background-size: contain;
-  z-index: 1;
+  z-index: 2;
 }
 
 .percentage {
-  position: relative;
-  font-size: 16px;
-  color: #b0f5e5;
+  font-size: 14px;
   font-weight: bold;
-  text-shadow: 0 0 5px #00ffd0;
-  z-index: 2;
+  color: #00ffd0;
+  text-shadow: 0 0 4px #00ffd0;
 }
+
+
 
 .logo-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   position: absolute;
-  bottom: 180px;
+  bottom: 100px; /* ⬅️ antes era 180px. Disminuí para que se acerque al borde inferior */
   left: 0;
   right: 0;
-  transform: scale(0.9);
-  margin-top: 20px;
+  transform: scale(1); /* ⬅️ escala normal */
+  margin-top: 0;
 }
 
 .tridente {
-  height: 100px;
+  height: 130px; /* ⬆️ antes era 100px */
 }
 
 .atlantis {
-  height: 60px;
-  margin-top: -30px;
+  height: 80px;   /* ⬆️ antes era 60px */
+  margin-top: -40px; /* mantiene la superposición, ajustá si hace falta */
 }
 
 /* ==================== PANTALLA DE JUEGO ==================== */
@@ -156,51 +146,74 @@ body, html {
   margin: 0 auto;
 }
 
-.ruleta-contenedor {
+#ruleta {
   width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  overflow: visible;
-}
-
-canvas {
-  width: 100%;
-  height: 100%;
+  height: auto;
   display: block;
-  position: relative;
-  z-index: 1;
+  transform: rotate(0deg);
+  transition: transform 5s ease-out;
+
+  /* 💎 Estética mejorada */
+  border-radius: 50%;
+  box-shadow:
+    0 0 15px rgba(0, 255, 208, 0.6),
+    0 0 25px rgba(0, 255, 208, 0.3),
+    0 0 45px rgba(0, 199, 128, 0.3);
+  filter: drop-shadow(0 0 6px #00ffd0);
 }
 
 .puntero {
   position: absolute;
-  top: -0%; /* mejor que -30px */
+  top: -0px;
   left: 50%;
   transform: translateX(-50%);
   width: 15%;
   max-width: 60px;
-  z-index: 10;
   pointer-events: none;
+  z-index: 10;
+
+  /* Estilo visual adicional */
+  filter: drop-shadow(0 0 8px #00ffd0) drop-shadow(0 0 16px #00c780);
+  transition: filter 0.3s ease;
 }
+
+/* Opción adicional si querés que palpite (sólo visual) */
+@keyframes punteroPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px #00ffd0);
+  }
+  50% {
+    filter: drop-shadow(0 0 14px #00ffd0) drop-shadow(0 0 22px #00c780);
+  }
+}
+
+.puntero.animado {
+  animation: punteroPulse 2s infinite;
+}
+
 
 #girar-btn {
   margin-top: 30px;
   padding: 14px 36px;
   font-size: 1.2rem;
-  border: none;
-  border-radius: 14px;
-  background: linear-gradient(to bottom, #00ffd0, #00c780);
-  color: #005f4e;
   font-weight: bold;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(to bottom, #00ffd0, #00c780);
+  color: #ffffff;
+  font-family: 'Montserrat', sans-serif;
   cursor: pointer;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 10px rgba(0, 255, 208, 0.6), 0 4px 15px rgba(0, 199, 128, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
 #girar-btn:hover {
   background: linear-gradient(to bottom, #00c780, #00ffd0);
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #00ffd0, 0 0 30px rgba(0, 255, 208, 0.5);
 }
+
 
 /* ==================== MEDIA QUERIES ==================== */
 @media screen and (max-width: 400px) {
@@ -209,7 +222,7 @@ canvas {
   }
 
   .puntero {
-    top: -0%;
+    top: -0px;
     width: 15%;
   }
 
@@ -226,4 +239,161 @@ canvas {
   .atlantis {
     height: 50px;
   }
+}
+
+@media screen and (max-width: 400px) {
+  .popup {
+    padding: 24px 28px;
+    max-width: 280px;
+  }
+}
+
+/* ==================== POPUP DE PREMIO ==================== */
+
+.popup-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popup-container.hidden {
+  display: none;
+}
+
+.popup {
+  position: relative;
+  background: radial-gradient(circle at center, #002822 0%, #000 100%);
+  border: 6px solid #00ffd0;
+  border-radius: 25px;
+  padding: 30px 40px;
+  width: 90%;
+  max-width: 220px;  /* 📏 Nuevo tamaño máximo */
+  box-shadow: 0 0 40px #00ffd0;
+  color: white;
+  text-align: center;
+  animation: popupEntrada 0.5s ease-out, popupPulse 1.5s ease-in-out infinite;
+}
+
+
+.popup h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+.popup h1 {
+  font-size: 48px;
+  margin-bottom: 30px;
+  color: #ffffff;
+  text-shadow: 0 0 15px #00ffd0;
+}
+
+.aceptar-btn {
+  padding: 12px 36px;
+  font-size: 18px;
+  font-weight: bold;
+  background: linear-gradient(to bottom, #00ffd0, #00c780);
+  border: none;
+  border-radius: 12px;
+  color: #003c32;
+  box-shadow: 0 0 10px #00ffd0;
+  cursor: pointer;
+}
+
+.cerrar-btn {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  background: #00ffd0;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #003c32;
+  cursor: pointer;
+  box-shadow: 0 0 10px #00ffd0;
+}
+
+/* 🎞️ Animación de entrada */
+@keyframes popupEntrada {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+    box-shadow: 0 0 0 transparent;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    box-shadow: 0 0 40px #00ffd0;
+  }
+}
+
+/* ✨ Pulso continuo del popup */
+@keyframes popupPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 30px #00ffd0;
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 60px #00ffd0;
+  }
+}
+
+/* ==================== LOGO SUPERIOR ATLANTIS ==================== */
+.logo-atlantis {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  animation: logoPulse 3s ease-in-out infinite;
+}
+
+.logo-atlantis img {
+  width: 200px;
+  max-width: 80vw;
+  /* Sin brillo ni animaciones */
+  filter: none;
+}
+
+
+body, html {
+  height: 100vh;
+  max-height: 100dvh; /* compatible con dispositivos móviles modernos */
+  overflow: hidden;
+}
+
+
+/* ✨ Animación de pulso */
+@keyframes logoPulse {
+  0%, 100% {
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    transform: translateX(-50%) scale(1.05);
+  }
+}
+
+.barra-superpuesta {
+  position: absolute;
+  top: 62%; /* 🔧 Ajustá este número según dónde quieras que aparezca */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  width: 80%;
+  max-width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
 }
